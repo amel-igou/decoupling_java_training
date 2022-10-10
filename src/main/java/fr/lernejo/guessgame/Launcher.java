@@ -30,5 +30,4 @@ public class Launcher {
             logger.log("Ou si vous voulez jouer avec un ordinateur vous devez choisir -auto et le deuxième paramétre doit être un numéro ");
         }
     }
-
 }
