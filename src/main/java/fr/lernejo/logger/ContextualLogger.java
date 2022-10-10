@@ -18,7 +18,7 @@ public class ContextualLogger implements Logger {
 //        LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         otherLogger.log(LocalDateTime.now().format(formatter) + " " + className + " " + message);
-//        String newMessage = "[" + now.format(formatter) + "] {" + this.className + "}" + message;
-//        this.otherLogger.log(newMessage);
+        //* String newMessage = "[" + now.format(formatter) + "] {" + this.className + "}" + message;
+       //* this.otherLogger.log(newMessage);
     }
 }

@@ -3,49 +3,63 @@ package fr.lernejo.guessgame;
 import fr.lernejo.logger.Logger;
 import fr.lernejo.logger.LoggerFactory;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Scanner;
-
 public class Simulation {
 
-    private final Logger logger = LoggerFactory.getLogger("Simulation");
-    private final Player player;
+    private final Logger logger = LoggerFactory.getLogger("simulation");
+    private final player player;
     private long numberToGuess;
 
-    public Simulation(Player player) {
+
+    public Simulation(player player) {
         this.player = player;
+        //TODO implement me
     }
 
     public void initialize(long numberToGuess) {
         this.numberToGuess = numberToGuess;
+        //TODO implement me
     }
 
     /**
      * @return true if the player have guessed the right number
      */
     private boolean nextRound() {
-        long nbr = this.player.askNextGuess();
-        if (nbr < this.numberToGuess)
-            player.respond(true);
-        if (nbr > this.numberToGuess)
-            player.respond(false);
-        return nbr == this.numberToGuess;
+        long number = player.askNextGuess();
+
+        if (number==numberToGuess){
+            logger.log("Vous avez deviné le bon numéro");
+            return true;
+        }
+
+        player.respond(number<numberToGuess);
+        return false;
     }
 
-    public void loopUntilPlayerSucceed(long maxIterations) {
-        int iter = 0;
-        LocalDateTime time = LocalDateTime.now();
-        logger.log("Devinez le nombre entre 0 et 100");
-        while (!nextRound() && iter < maxIterations) {
-            iter++;
-        }
-        Duration diff = Duration.between(time, LocalDateTime.now());
-        logger.log(String.format("%02d:%02d.%03d", diff.toMinutesPart(), diff.toSecondsPart(), diff.toMillisPart()));
-        if (iter >= maxIterations)
-            logger.log("Bouuh tu a perdu");
-        else
+    public void loopUntilPlayerSucceed(long maxIter) {
+        long i = 0;
+        long start = System.currentTimeMillis();
+        boolean response;
+
+        do{
+            response = this.nextRound();
+            if (i>=maxIter)
+                break;
+            i++;
+        }while(!response);
+
+        long end = System.currentTimeMillis();
+        long gameTime = end - start;
+        long minutes = gameTime / 60000;
+        gameTime %= 60000;
+        long seconds = gameTime / 1000;
+        gameTime %= 1000;
+        long milliseconds = gameTime;
+        logger.log(String.format("%02d:%02d.%d", minutes, seconds, milliseconds));
+        if (response)
             logger.log("Félicitations tu as trouvé !");
+        else
+            logger.log("Bouuh tu a perdu");
+
     }
+
 }

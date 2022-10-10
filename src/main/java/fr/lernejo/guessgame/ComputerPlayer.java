@@ -1,25 +1,27 @@
 package fr.lernejo.guessgame;
 
-public class ComputePlayer implements Player {
-    private long lastGuessMax = 100;
-    private long lastGuessMin = 0;
-    private long lastGuess = 100;
+    import fr.lernejo.logger.Logger;
+    import fr.lernejo.logger.LoggerFactory;
+
+    import java.security.SecureRandom;
+
+public class ComputerPlayer implements player {
+    private final Logger logger = LoggerFactory.getLogger("ComputerPlayer");
 
     @Override
     public long askNextGuess() {
-
-        this.lastGuess = lastGuessMin + ((lastGuessMax - lastGuessMin) / 2);
-
-        return this.lastGuess;
+        SecureRandom random = new SecureRandom();
+        return random.nextInt(100);
     }
 
     @Override
     public void respond(boolean lowerOrGreater) {
-        if (lowerOrGreater) {
-            this.lastGuessMin = this.lastGuess + 1;
-        } else {
-            this.lastGuessMax = this.lastGuess - 1;
-        }
+        if (lowerOrGreater)
+            logger.log("le numéro entré est plus petit");
+        else
+            logger.log("le numéro entré est plus grand");
     }
-
 }
+
+
+

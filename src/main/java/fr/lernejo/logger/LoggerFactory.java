@@ -2,7 +2,7 @@ package fr.lernejo.logger;
 
 public class LoggerFactory {
     public static Logger getLogger(String name) {
-        Logger log = new ContextualLogger(
+        return new ContextualLogger(
             name,
             new CompositeLogger(
                 new ConsoleLogger(),
@@ -12,6 +12,5 @@ public class LoggerFactory {
                 )
             )
         );
-        return log;
     }
 }
